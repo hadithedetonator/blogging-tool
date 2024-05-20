@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reader Article Page</title>
+  <link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="bg-gray-800 flex justify-between">
+    <div class="ml-4">
+      <% if (user) { %>
+      <a href="/author" class="text-white px-4 py-2 hover:bg-blue-600 rounded">Author Dashboard</a>
+    </div>
+    
+      <a href="/logout" class="text-white px-4 py-2 hover:bg-red-600 rounded">Logout</a>
+    <% } else { %>
+      <a href="/login" class="text-white px-4 py-2 hover:bg-blue-600 rounded">Login</a>
+    <% } %>
+  </nav>
+
+  <header class="bg-gray-100">
+    <!-- Header code goes here -->
+  </header>
+
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    
+    <h2 class="bg-grey text-4xl hover: font-bold mb-4">Reader-Article Page</h2>
+    <h2 class="text-2xl font-bold mb-4"><%= article.title %></h2>
+
+    <p>Subtitle: <%= article.subtitle %></p>
+    <p>Likes: <span id="likesCount"><%= article.likes %></span></p>
+
+    <p class="mt-4"><%= article.content %></p>
+    <% if (user) { %>
+
+      <button id="likeButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Like</button>
+    <% } else { %><a href="/login" class="py-60 px-60 rounded border-gray-300 hover:font-bold">Log in to like</a>
+    <% } %>
+    <p id="likeMessage" class="hidden text-red-500 font-semibold">Already liked</p>
+
+    <h3 class="text-xl font-bold mt-4">Comments</h3>
+    <ul>
+      <% comments.forEach((comment) => { %>
+        <% if (comment.article_id === article.id) { %>
+          <li>
+            <p class=""><%= comment.content %></p>
+              Written at: <%= comment.created_at %></p>
+            <p>Written by: <%= comment.commenter_name %></p>
+
+          </li>
+        <% } %>
+      <% }) %>
+    </ul>
+    
+    <% if (user) { %>
+
+    <form action="/reader/article/<%= article.id %>/comment" method="POST" class="mt-4">
+      <input type="text" name="comment" placeholder="Add a comment..." required
+        class="w-full px-3 py-2 border border-gray-300 rounded">
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit Comment</button>
+    </form>
+    <% } else { %><a href="/login" class="py-60 px-60 rounded border-gray-300 hover:font-bold">Log in to comment</a>
+    <% } %>
+  </main>
+
+  <footer class="bg-gray-800">
+    <!-- Footer code goes here -->
+  </footer>
+
+  <script>
+    const likeButton = document.getElementById('likeButton');
+    const likesCount = document.getElementById('likesCount');
+    const likeMessage = document.getElementById('likeMessage');
+    let isLiked = false;
+
+    
+  // Check if the article is already liked when the page loads
+  fetch(`/reader/article/<%= article.id %>/isLiked`, {
+    method: 'GET',
+  })
+    .then(response => response.json())
+    .then(data => {
+      isLiked = data.isLiked;
+      if (isLiked) {
+        // Show the "Already liked" message if the article is already liked
+        likeMessage.classList.remove('hidden');
+      }
+    })
+    .catch(error => {
+      console.error('Error checking if article is liked:', error);
+    });
+
+  likeButton.addEventListener('click', () => {
+    if (isLiked) {
+      // Show the "Already liked" message if the article is already liked
+      likeMessage.classList.remove('hidden');
+    } else {
+      // Send a POST request to the server to increment the likes count
+      fetch(`/reader/article/<%= article.id %>/like`, {
+        method: 'POST',
+      })
+        .then(response => {
+          if (response.ok) {
+            // Update the likes count on the page
+            const updatedLikes = parseInt(likesCount.textContent) + 1;
+            likesCount.textContent = updatedLikes;
+
+            // Set the isLiked flag to true to prevent further likes
+            isLiked = true;
+
+            // Hide the "Already liked" message
+            likeMessage.classList.add('hidden');
+          } else {
+            console.error('Failed to increment likes count');
+          }
+        })
+        .catch(error => {
+          console.error('Error incrementing likes count:', error);
+        });
+    }
+  });
+</script>
+</body>
+
+</html>

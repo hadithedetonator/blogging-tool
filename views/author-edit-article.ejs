@@ -1,0 +1,49 @@
+<!-- author-edit-article.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Draft Article</title>
+  <link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-bold mb-4">Edit Draft Article</h1>
+
+    <form action="/author/article/<%= article.id %>/edit" method="POST" class="space-y-4">
+      <div>
+        <label for="title" class="block font-semibold">Title:</label>
+        <input type="text" id="title" name="title" value="<%= article.title %>"
+          class="border border-gray-300 rounded px-3 py-2 w-full" required>
+      </div>
+
+      <div>
+        <label for="subtitle" class="block font-semibold">Subtitle:</label>
+        <input type="text" id="subtitle" name="subtitle" value="<%= article.subtitle %>"
+          class="border border-gray-300 rounded px-3 py-2 w-full" required>
+      </div>
+
+      <div>
+        <label for="content" class="block font-semibold">Content:</label>
+        <textarea id="content" name="content" rows="5"
+          class="border border-gray-300 rounded px-3 py-2 w-full" required><%= article.content %></textarea>
+      </div>
+
+      <div>
+        <button type="submit"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit Changes</button>
+      </div>
+    </form>
+
+    <p class="mt-4">Created: <%= article.created_at %></p>
+    <p>Last Modified: <%= article.modified_at %></p>
+
+    <a href="/author" class="mt-4 text-blue-500 hover:underline">Back to Author - Home Page</a>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!-- author-settings.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Author - Settings Page</title>
+  <link href="/css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="bg-gray-800">
+    <!-- Navbar code goes here -->
+  </nav>
+
+  <header class="bg-gray-100">
+    <!-- Header code goes here -->
+  </header>
+
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold mb-4">Author - Settings Page</h2>
+
+    <form action="/author/settings" method="POST" class="max-w-md mx-auto">
+      <div class="mb-4">
+        <label for="blogTitle" class="block font-medium text-gray-700">Blog Title:</label>
+        <input type="text" name="blogTitle" id="blogTitle" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300" value="<%= blogSettings.title %>">
+      </div>
+
+      <div class="mb-4">
+        <label for="subtitle" class="block font-medium text-gray-700">Subtitle:</label>
+        <input type="text" name="subtitle" id="subtitle" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300" value="<%= blogSettings.subtitle %>">
+      </div>
+
+      <div class="mb-4">
+        <label for="authorName" class="block font-medium text-gray-700">Author Name:</label>
+        <input type="text" name="authorName" id="authorName" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300" value="<%= blogSettings.author %>">
+      </div>
+
+      <div class="mb-4">
+        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+        <a href="/author" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ml-4">Back</a>
+      </div>
+    </form>
+  </main>
+
+  <footer class="bg-gray-100">
+    <!-- Footer code goes here -->
+  </footer>
+</body>
+
+</html>

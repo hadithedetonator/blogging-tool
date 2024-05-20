@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="/css/styles.css" rel="stylesheet">
+
+    <title>New Draft Article</title>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-3xl mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-4">New Draft Article</h1>
+        <form action="/author/article/new/<%= draftId %>" method="POST">
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Title:</label>
+                <input class="border border-gray-300 rounded py-2 px-4 w-full" type="text" name="title" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Subtitle:</label>
+                <input class="border border-gray-300 rounded py-2 px-4 w-full" type="text" name="subtitle" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Content:</label>
+                <textarea class="border border-gray-300 rounded py-2 px-4 w-full" name="content" required></textarea>
+            </div>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Save Draft</button>
+        </form>
+        <a class="block mt-4 text-blue-500 hover:text-blue-700" href="/author">Back to Home</a>
+    </div>
+</body>
+</html>
